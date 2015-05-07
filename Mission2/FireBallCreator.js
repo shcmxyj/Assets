@@ -13,7 +13,7 @@ function Update () {
 }
 
 function Spawn() {
-if(!GameController.failed){
+if(GameController.status == 0){
 	for(var i = 0; i < ballNum; i++) {
 	var cloneBall:GameObject;
 	var destination:Vector2;

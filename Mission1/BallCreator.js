@@ -12,7 +12,7 @@ function Update () {
 }
 
 function Spawn() {
-	if(!GameController.failed){
+	if(GameController.status == 0){
 		Instantiate(ball, new Vector3(0, 0, 0), transform.rotation);
 	}else{
 		CancelInvoke("Spawn");

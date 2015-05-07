@@ -24,7 +24,7 @@ function OnTriggerEnter2D(coll: Collider2D) {
 			coll.rigidbody2D.velocity.y *= -1;
 		}else if(name == "GroundSide") {
 			Destroy(coll.gameObject);
-			GameController.failed = true;
+			GameController.status = 1;
 		}
 	}
 }
