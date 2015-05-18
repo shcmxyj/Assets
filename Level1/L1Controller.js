@@ -1,4 +1,13 @@
 ﻿#pragma strict
+//highest 19900
+//common highest 18690
+//S 18690
+//A 15480
+//B 13850
+//C 11550
+//D 9250
+
+
 var anim:Animator;
 var currentArrows: GameObject[];
 var arrowCombos: L1ArrowCombo[];
@@ -14,11 +23,24 @@ var currentFlaw:GameObject;
 
 var process:int = 0;
 
+var muXie:GameObject;
+
+static var highestScore: long;
+
+var rightArrow:GameObject;
+var leftArrow:GameObject;
+
+var successPic:GameObject;
+var failPic:GameObject;
+
 function Start () {
 	currentArrows = new GameObject[comboLength];
 	audio.Play();
 	CreateNewCombo();
 //	InvokeRepeating("CreateNewCombo", 3.18f, 3.2f);
+
+	highestScore = PlayerPrefs.GetInt("L1HighestScore", 0);
+	Debug.Log(highestScore);
 }
 
 function Update () {
@@ -52,12 +74,14 @@ function Click(isLeft:boolean) {
 			var xPosition = currentArrows[index].transform.position.x;
 			if(xPosition < 4.4 && xPosition > 3.6) {
 				combo += 1;
-				point += (1 - Mathf.Abs(xPosition - 4)) * 100 + 1;
+				point += 50 + (1 - Mathf.Abs(xPosition - 4.0)) * 50 + 1;
 				if(combo % 10 == 0) {
 					point += combo * 10;
 				}
 				anim.SetTrigger("CutSuccess");
-				Debug.Log(point + " " + combo);
+				StartCoroutine(MuXieAppear());
+				
+//				Debug.Log(point + " " + combo);
 				Destroy(currentArrows[index]);
 				NextArrow();
 				return;
@@ -71,34 +95,59 @@ function Click(isLeft:boolean) {
 	}
 }
 
+function MuXieAppear() {
+	yield WaitForSeconds(0.2);
+	var tempMuXie:GameObject = Instantiate(muXie, muXie.transform.position, muXie.transform.rotation);
+	Destroy(tempMuXie, 0.2);
+}
+
 function NextArrow() {
 
 	index++;
 	if(index == comboLength){
-		GameController.status = 2;
+		GameEnd();
 		return;
 	}
 	while(currentArrows[index] == null) {
 		index++;
 		if(index == comboLength){
-			GameController.status = 2;
+			GameEnd();
 			break;
 		}
 	}
 
 }
 
+function GameEnd() {
+	if(highestScore < point) {
+		PlayerPrefs.SetInt("L1HighestScore", point);
+		PlayerPrefs.Save();
+	}
+	GameController.status = 2;
+	
+	Destroy(anim.gameObject);
+	Destroy(currentFlaw);
+	Destroy(GameObject.Find("Tree"));
+	if(point > 9250) {
+		Instantiate(successPic, successPic.transform.position, successPic.transform.rotation);
+	}else{
+		Instantiate(failPic, failPic.transform.position, failPic.transform.rotation);
+	}
+
+}
+
+
 function CreateNewCombo() {
-	var newCombo1: GameObject[] = arrowCombos[Random.Range(0, arrowCombos.Length)].arrows;	
+	var newCombo1: int[] = arrowCombos[Random.Range(0, arrowCombos.Length)].arrows;	
 //	var newCombo2: GameObject[] = arrowCombos[Random.Range(0, arrowCombos.Length)].arrows;
 	
 	var j:int;
 	for(j = 0; j < comboLength; j++) {
-		if(newCombo1[j] != null){
-			if(newCombo1[j].tag == "Left"){
-				currentArrows[j] = Instantiate(newCombo1[j], new Vector3(-15.2 - j*1.2, -2.8, 0), Quaternion.identity);
+		if(newCombo1[j] != 0){
+			if(newCombo1[j] == 1){
+				currentArrows[j] = Instantiate(leftArrow, new Vector3(-15.2 - j*1.2, -2.9, 0), Quaternion.identity);
 			}else{
-				currentArrows[j] = Instantiate(newCombo1[j], new Vector3(-15.2 - j*1.2, -2.8, 0), new Quaternion(0, 180, 0, 0));
+				currentArrows[j] = Instantiate(rightArrow, new Vector3(-15.2 - j*1.2, -2.9, 0), Quaternion.identity);
 			}
 		}else{
 			currentArrows[j] = null;

@@ -1,8 +1,8 @@
 ﻿#pragma strict
-var arrows: GameObject[];
+var arrows: int[];	
 
 function Start () {
-	
+
 }
 
 function Update () {
