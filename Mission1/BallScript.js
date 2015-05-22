@@ -12,7 +12,8 @@ function Start() {
 	var x = Random.Range((-MainCamera.devWidth/2 + MainCamera.deltaWidth) * 0.95, (MainCamera.devWidth/2 - MainCamera.deltaWidth) * 0.95);	
 	transform.position = new Vector3(x, (MainCamera.devHeight/2 - MainCamera.deltaHeight)*0.95, 0);
 //	Debug.Log(transform.position.x + " " + x);
-	rigidbody2D.velocity = speed;
+	GetComponent(Rigidbody2D).velocity = speed;
+//	rigidbody2D.velocity = speed;
 }
 
 function Update () {
