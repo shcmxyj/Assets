@@ -47,10 +47,10 @@ TextureImporter:
     - name: "\u624B\u5200_0"
       rect:
         serializedVersion: 2
-        x: 326
-        y: 680
-        width: 151
-        height: 41
+        x: 30
+        y: 19
+        width: 148
+        height: 44
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

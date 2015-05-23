@@ -47,7 +47,7 @@ Transition:
   - m_ConditionMode: 5
     m_ConditionEvent: CutFail
     m_EventTreshold: 0
-    m_ExitTime: 1
+    m_ExitTime: .75
   m_Atomic: 1
   m_Solo: 0
   m_Mute: 0
@@ -173,9 +173,10 @@ StateMachine:
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:
     data:
-      first: {fileID: 110239146}
+      first: {fileID: 0}
       second:
-      - {fileID: 110199240}
+      - {fileID: 110198584}
+      - {fileID: 110184164}
     data:
       first: {fileID: 110250588}
       second: []
@@ -184,10 +185,9 @@ StateMachine:
       second:
       - {fileID: 110173798}
     data:
-      first: {fileID: 0}
+      first: {fileID: 110239146}
       second:
-      - {fileID: 110198584}
-      - {fileID: 110184164}
+      - {fileID: 110199240}
   m_MotionSetCount: 1
   m_AnyStatePosition: {x: -108, y: -24, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
