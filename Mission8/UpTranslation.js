@@ -31,7 +31,7 @@ function WaitAndGoOn() {
 	sj2d.enabled = false;
 	sj2d.connectedBody.rigidbody2D.velocity = new Vector2(0, 0);
 	GameController.status = 3;
- 	yield WaitForSeconds(0.5);
+ 	yield WaitForSeconds(1);
  	controller.OneTouch(sj2d.connectedBody);
  	if(GameController.status != 2){
 	 	transform.position.y = -Mission8Controller.yPosition;
